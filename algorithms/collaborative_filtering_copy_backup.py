@@ -86,22 +86,17 @@ class CollaborativeFiltering():
 
     def recommend(self, u):
         index_user_rated = np.where(self.Y_data[:, 0] == u)[0]
-        index_user_rated_test = np.where(self.Y_test[:, 0] == u)[0] if self.based == USER else np.where(self.Y_test[:, 1] == u)[0]
+        index_user_rated_test = np.where(self.Y_test[:, 0] == u)[0]
         items_rated_by_user = self.Y_data[index_user_rated, 1].astype(np.int32)
-        items_rated_by_user_test = self.Y_test[index_user_rated_test, 1].astype(np.int32) if self.based == USER else self.Y_test[index_user_rated_test, 0].astype(np.int32)
+        items_rated_by_user_test = self.Y_test[index_user_rated_test, 1].astype(np.int32)
         items_rated_by_user_all = items_rated_by_user.tolist() + items_rated_by_user_test.tolist()
         recommended_items = []
         for i in range(self.n_items):
             if i not in items_rated_by_user_all:
                 rating = self.__pred(u, i)
                 recommended_items.append([i,rating])
-        if self.based == USER:
-            temp = np.array(recommended_items)
-            index = np.argsort(temp[:, 1])[-self.amount:]
-            return temp[index,0].astype(np.int32)[::-1]
         temp = np.array(recommended_items)
-        index = np.argsort(temp[:, 1])
-        # [-self.amount:]
+        index = np.argsort(temp[:, 1])[-self.amount:]
         return temp[index,0].astype(np.int32)[::-1]
 
     def recommendation_result(self):
@@ -112,7 +107,6 @@ class CollaborativeFiltering():
         for u in range(self.n_users):
             recommended_items = self.recommend(u)
             row = recommended_items.tolist()
-            # print(u, row)
             result[u] += row
         if self.based == USER:
             return result
@@ -125,8 +119,6 @@ class CollaborativeFiltering():
             users = result[i][1:]
             for user in range(len(users)):
                 convert[users[user]].append(item)
-        for u in range(self.n_items):
-            convert[u] = convert[u][:self.amount+1]
         return convert
 
     def evaluate(self):
@@ -195,7 +187,7 @@ def jaccard_similarity(list1, list2):
 # x = get_data(path)
 
 # parent_path = pathlib.Path(__file__).parent.resolve()
-# path = os.path.join(parent_path,'data-binary-test.csv')
+# path = os.path.join(parent_path,'data-150-binary.csv')
 # x = get_data(path)
 
 # for i in range(x.shape[0]-1):
@@ -204,19 +196,14 @@ def jaccard_similarity(list1, list2):
 #             print(i,j)
 # x[:, :2] -= 1
 # print(x.shape[0])
-# Ydata, Ytest = train_test_split(x,test_size=1,shuffle=False)
 # Ydata, Ytest = train_test_split(x)
-
-# Ytest = train_test_split(Ytest,train_size=1)
 # print(Ydata)
 # print(Ytest)
-# rs_cf_cosine_user = CollaborativeFiltering(Y_data = Ydata, Y_test=Ytest, k=30, amount = 2, similarity_based=JACCARD, based=ITEM)
+# rs_cf_cosine_user = CollaborativeFiltering(Y_data = Ydata, Y_test= Ytest, k=30, amount = 5, similarity_based=JACCARD, based=USER)
 # print(rs_cf_cosine_user.n_users, rs_cf_cosine_user.n_items)
 # rs_cf_cosine_user.normalized()
 # rs_cf_cosine_user.similarity()
 # rs_cf_cosine_user.fit()
-# print(rs_cf_cosine_user.recommend(0))
-# print(rs_cf_cosine_user.recommendation_result())
 # print(rs_cf_cosine_user.Y_normalized)
 # print(rs_cf_cosine_user.Similarity)
 # for i in rs_cf_cosine_user.Similarity:
