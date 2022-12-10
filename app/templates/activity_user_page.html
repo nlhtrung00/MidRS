@@ -1,0 +1,41 @@
+{% extends "admin_base_layout.html" %}
+{% set active_page = "user_page" %}
+{% block title %}
+Quản lý người dùng
+{% endblock %}
+{% block body %}
+<div class="container">
+  <table class="table table-striped table-dark">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Tên</th>
+        <th scope="col">Thời gian tải lên</th>
+        <th scope="col">Thuật toán đã sử dụng</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for file in files %}
+        <tr>
+          <th scope="row">{{loop.index}}</th>
+          <td>{{file.name}}</td>
+          <td>{{file.created_at}}</td>
+          <td>
+            {% for result in results %}
+              {% if result.file_upload_id == file.id%}
+                {% for algorithm in algorithms %}
+                  {% if result.algorithm_id == algorithm.id%}
+                  <p class="mb-0">
+                    {{algorithm.name}}
+                  </p> 
+                  {% endif %}
+                {% endfor %}
+              {% endif %}
+            {% endfor %}
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

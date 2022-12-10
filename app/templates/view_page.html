@@ -1,0 +1,29 @@
+{% extends "base_layout.html" %} {% set active_page = "file_page" %} {% block
+title %} Xem trước {% endblock %} {% block body %}
+<div class="container">
+	<table class="table table-striped table-dark">
+		<thead>
+			<tr>
+				<th scope="col">Người dùng</th>
+				<th scope="col" colspan="{{max-1}}">Mục gợi ý</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for file in data %}
+			<tr>
+				<td scope="row">{{loop.index0}}</td>
+				{% for item in file %}
+				<td>
+					{{ item }}
+				</td>
+				{% endfor %}
+				{% if file|length<max-1 %}
+				<td colspan="{{max-1-file|length}}">
+				</td>
+				{% endif %}
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+{% endblock %}

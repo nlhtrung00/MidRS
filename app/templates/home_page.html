@@ -1,0 +1,62 @@
+{% extends "base_layout.html" %}
+{% set active_page = "home_page" %}
+{% block title %}
+Trang chủ
+{% endblock %}
+{% block body %}
+<div class="d-flex">
+  <img src="{{url_for('static', filename='image/description.png')}}" height="400">
+  <div>
+    <div class="d-flex flex-column mt-3">
+      <div class="media">
+        <span class="align-self-center mr-3" style="width: 50px; height: 50px; background: #ed1c24;  border-radius: 50%;"></span>
+        <div class="media-body">
+          <h5 class="mt-0">Người dùng</h5>
+          <p>Các giá trị cột này là đại diện cho các mã người dùng, các giá trị nên được quy đổi, bắt đầu từ 0.</p>
+        </div>
+      </div>
+      <div class="media">
+        <span class="align-self-center mr-3" style="width: 50px; height: 50px; background: #22b14c;  border-radius: 50%;"></span>
+        <div class="media-body">
+          <h5 class="mt-0">Chỉ mục</h5>
+          <p>Các giá trị cột này là đại diện cho các mã chỉ mục, các giá trị nên được quy đổi, bắt đầu từ 0.</p>
+        </div>
+      </div>
+      <div class="media">
+        <span class="align-self-center mr-3" style="width: 50px; height: 50px; background: #3f48cc;  border-radius: 50%;"></span>
+        <div class="media-body">
+          <h5 class="mt-0">Đánh giá</h5>
+          <p>Mỗi giá trị trong cột này là các xếp hạng.</p>
+        </div>
+      </div>
+      <div class="media">
+        <span class="align-self-center mr-3" style="width: 50px; height: 50px; background: #fff200;  border-radius: 50%;"></span>
+        <div class="media-body">
+          <h5 class="mt-0">Lịch sử</h5>
+          <p>Mỗi hàng thể hiện việc người xếp hạng cho chỉ mục với giá trị đánh giá.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    {% for algorithm in algorithms %}
+    <div class="col-6 pb-3">
+      <div class="card border border-primary p-3" style="min-height: 200px;">
+          <div class="card-block">
+              <h3 class="card-title">{{algorithm.name}}</h3>
+              <p class="card-text">{{algorithm.description}}</p>
+              <a href="{{algorithm.link}}" class="badge badge-info">Xem thêm 
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+                </svg>
+              </a>
+          </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends "admin_base_layout.html" %}
+{% set active_page = "admin_file_page" %}
+{% block title %}
+Trang quản trị tập tin
+{% endblock %}
+{% block body %}
+<div class="container">
+  <form method="POST" class="form-register" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}
+
+    {{ form.file.label() }}
+    {{ form.file(class='form-control-file') }}
+
+    <br>
+    {{ form.submit(class='btn btn-lg btn-block btn-primary') }}
+  
+  </form>
+  <br>
+  <table class="table table-striped table-dark">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Tên</th>
+        <th scope="col" colspan="2">Thời gian tải lên</th>
+        <!-- <th scope="col">Description</th> -->
+        <!-- <th scope="col">Action</th> -->
+      </tr>
+    </thead>
+    <tbody>
+      {% for file in files %}
+        <tr>
+          <th scope="row">{{loop.index}}</th>
+          <td>{{file.name}}</td>
+          <td>{{file.created_at}}</td>
+          {% if loop.index == 1 %}
+            <td><a class="btn btn-info" href="{{url_for('admin_file_page_show', id=file.id)}}" role="button" target="_blank">Xem tập tin mẫu</a></td>
+          {% else %}
+            <td></td>
+          {% endif %}
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

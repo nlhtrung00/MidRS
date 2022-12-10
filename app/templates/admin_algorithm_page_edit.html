@@ -1,0 +1,17 @@
+{% extends "admin_base_layout.html" %} {% set active_page = "algorithm_page" %}
+{% block title %} Chỉnh sửa nội dung {% endblock %} {% block body %}
+<div class="container">
+	<form
+		method="POST"
+		enctype="multipart/form-data">
+		{{ form.hidden_tag() }} {{ form.name.label() }} {{
+		form.name(class='form-control', placeholder='Tên thuật toán',
+		value=algorithm.name) }} {{ form.description.label() }} {{
+		form.description(class='form-control', placeholder='Mô tả') }} {{
+		form.link.label() }} {{ form.link(class='form-control', placeholder='Đường dẫn thông tin bổ sung', value=algorithm.link) }}
+		<br />
+		{{ form.submit(class='btn btn-lg btn-block btn-primary', value='Chỉnh sửa')
+		}}
+	</form>
+</div>
+{% endblock %}

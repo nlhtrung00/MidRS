@@ -1,0 +1,125 @@
+{% extends "base_layout.html" %} {% set active_page = "file_page" %} {% block
+title %} Kết quả {% endblock %} {% block javascript %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock %} {% block body %}
+<div class="container">
+	<a
+		type="button"
+		class="btn btn-primary"
+		id="toggleForm">
+		Hiện thị biểu mẫu
+	</a>
+	<br />
+	<form
+		method="POST"
+		style="display: none"
+		class="form-files"
+		id="reForm">
+		{{ form.hidden_tag() }} {{ form.select.label(class="font-weight-bold") }} {%
+		for subselect in form.select %}
+		<div class="form-check mb-2">
+			{{ subselect() }} {{ subselect.label(class='form-check-label ml-1') }}
+		</div>
+		{% endfor %}
+		<div
+			class="ml-2 knn"
+			style="display: none">
+			<label for="knn">Số lượng láng giềng gần:</label>
+			<input
+				type="number"
+				name="knn"
+				id="knn"
+				class="form-control form-control-sm col-md-4"
+				placeholder="30" />
+		</div>
+		<br />
+		{{ form.submit(id='btn-submit', class='btn btn-lg btn-block btn-primary') }}
+	</form>
+	<br />
+
+	<div
+		id="loader"
+		style="display: none">
+		<img
+			src="{{url_for('static', filename='image/loading.gif')}}"
+			width="100" />
+		<b>Xin vui lòng chờ trong giây lát...</b>
+	</div>
+
+	<table class="table table-striped table-dark">
+		<thead>
+			<tr>
+				<th scope="col">#</th>
+				<th scope="col">Tên</th>
+				<th scope="col">Thuật toán</th>
+				<th scope="col">Thao tác</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for result in results %}
+			<tr>
+				<th scope="row">{{loop.index}}</th>
+				<td>{{result.name}}</td>
+				<td>
+					{% for algorithm in algorithms %} {% if algorithm.id ==
+					result.algorithm_id %} {{algorithm.name}} {% endif %} {% endfor %}
+				</td>
+				<td class="flex">
+					<a
+						class="btn btn-warning"
+						href="{{url_for('download', id=result.id)}}"
+						role="button"
+						>Tải về</a
+					>
+					<a
+						class="btn btn-info"
+						href="{{url_for('view_page', id=result.id)}}"
+						role="button"
+						target="_blank"
+						>Xem trước</a
+					>
+					<a
+						type="button"
+						class="btn btn-primary viewChart"
+						data-value="{{result.id}}">
+						<!-- data-toggle="modal" data-target="#modalChart1" -->
+						Xem Sơ đồ
+					</a>
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+<div
+	class="modal fade"
+	id="modalChart"
+	tabindex="-1"
+	role="dialog"
+	aria-hidden="true">
+	<div
+		class="modal-dialog modal-dialog-centered modal-lg"
+		role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Điểm số</h5>
+				<button
+					type="button"
+					class="close"
+					data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<canvas id="chart"></canvas>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script src="{{url_for('static', filename='js/loading_chart.js')}}"></script>
+<script src="{{url_for('static', filename='js/disable-btn-submit.js')}}"></script>
+<script src="{{url_for('static', filename='js/re-form.js')}}"></script>
+
+{% endblock %}

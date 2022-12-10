@@ -1,0 +1,32 @@
+{% extends "base_layout.html" %}
+{% block title %}
+Đăng ký
+{% endblock %}
+{% block body %}
+<div class="container">
+  <form method="POST" class="form-register" style="">
+    {{ form.hidden_tag() }}
+
+    {{ form.user_name.label() }}
+    {{ form.user_name(class='form-control', placeholder='Tên đăng nhập') }}
+
+    {{ form.email_address.label() }}
+    {{ form.email_address(class='form-control', placeholder='Email') }}
+
+    {{ form.password.label() }}
+    {{ form.password(class='form-control', placeholder='Mật khẩu') }}
+  
+    {{ form.confirm_password.label() }}
+    {{ form.confirm_password(class='form-control', placeholder='Xác nhận mật khẩu') }}
+
+    <br>
+    <div class="checkbox mb-3">
+      <h6>Đã có tài khoản? <a href="{{url_for('login_page')}}" class="btn btn-sm btn-link">Đăng nhập</a></h6>
+      
+    </div>
+    {{ form.submit(class='btn btn-lg btn-block btn-primary') }}
+  
+  </form>
+
+</div>
+{% endblock %}

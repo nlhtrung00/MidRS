@@ -1,0 +1,5 @@
+PEARSON = "Pearson"
+COSINE = "Cosine"
+JACCARD = "Jaccard"
+USER = "User"
+ITEM = "Item"

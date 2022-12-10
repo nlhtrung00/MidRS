@@ -1,0 +1,49 @@
+{% extends "admin_base_layout.html" %} {% set active_page = "algorithm_page" %}
+{% block title %} Trang quản trị thuật toán {% endblock %} {% block body %}
+<div class="container">
+	<form
+		method="POST"
+		class="form-register"
+		enctype="multipart/form-data">
+		{{ form.hidden_tag() }} {{ form.name.label() }} {{
+		form.name(class='form-control', placeholder='Tên thuật toán') }} {{
+		form.description.label() }} {{ form.description(class='form-control',
+		placeholder='Mô tả thuật toán') }} {{ form.link.label() }} {{
+		form.link(class='form-control', placeholder='Đường dẫn thông tin bổ sung')
+		}}
+		<br />
+		{{ form.submit(class='btn btn-lg btn-block btn-primary') }}
+	</form>
+	<br />
+	<table class="table table-striped table-dark">
+		<thead>
+			<tr>
+				<th scope="col">#</th>
+				<th scope="col">Tên thuật toán</th>
+				<th scope="col">Mô tả</th>
+				<th scope="col">Đường dẫn</th>
+
+				<!-- <th scope="col">Action</th> -->
+			</tr>
+		</thead>
+		<tbody>
+			{% for algorithm in algorithms %}
+			<tr>
+				<th scope="row">{{loop.index}}</th>
+				<td>{{algorithm.name}}</td>
+				<td>{{algorithm.description}}</td>
+				<td>{{algorithm.link}}</td>
+				<td>
+					<a
+						class="btn btn-primary"
+						href="{{url_for('admin_algorithm_page_edit', id=algorithm.id)}}"
+						role="button"
+						>Chỉnh sửa</a
+					>
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+{% endblock %}
