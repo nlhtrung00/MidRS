@@ -672,7 +672,7 @@ def result_page(id):
                     rs_mf = MatrixFactorizattion(Y_data = Y_train, Y_test=Y_test, amount = amount, latent=10, regularization=.1, eta=0.70)
                     rs_mf.fit()
 
-                    result = Results(name=filename_result, storage_path=storage_path_result, k=int(str(knn)),
+                    result = Results(name=filename_result, storage_path=storage_path_result, knn=int(str(knn)),
                                         file_upload_id=file.id, algorithm_id=form.select.data)
                     db.session.add(result)
                     db.session.commit()

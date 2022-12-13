@@ -15,6 +15,7 @@ $(document).ready(function () {
 	$("input[name='select']").click(function () {
 		let index = $("input[name='select']:checked").val();
 		if (
+			index == 1 ||
 			index == 3 ||
 			index == 4 ||
 			index == 5 ||

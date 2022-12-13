@@ -10,9 +10,11 @@ class Popular():
     def __init__(self, Y_data, Y_test, k = 10):
         self.Y_data = Y_data
         self.Y_test = Y_test
+        self.n_users_test = int(np.max(self.Y_test[:, 0])) + 1 
+        self.n_items_test = int(np.max(self.Y_test[:, 1])) + 1 
         self.k = k
-        self.n_users = int(np.max(self.Y_data[:, 0])) + 1 
-        self.n_items = int(np.max(self.Y_data[:, 1])) + 1
+        self.n_users = int(np.max(self.Y_data[:, 0])) + 1 if self.n_users_test<int(np.max(self.Y_data[:, 0])) + 1 else self.n_users_test
+        self.n_items = int(np.max(self.Y_data[:, 1])) + 1 if self.n_items_test<int(np.max(self.Y_data[:, 1])) + 1 else self.n_items_test
 
     def normalized(self):
         items = self.Y_data[:,1]
